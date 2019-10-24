@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8' />
-    <title>Turisme a l'AMB</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
-    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
-    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
 
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id='map'></div>
-    <script>
+<head>
+  <meta charset='utf-8' />
+  <title>Turisme a l'AMB</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css'
+    type='text/css' />
+  <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='map'></div>
+  <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
     var map = new mapboxgl.Map({
       container: 'map',
@@ -40,53 +45,53 @@
 
     //afegim el control de navegació i el cercador
 
-    map.addControl(new mapboxgl.AttributionControl({compact: true}));
-                map.addControl(new mapboxgl.NavigationControl());
-				map.addControl(new MapboxGeocoder({
-                accessToken: mapboxgl.accessToken,
-                mapboxgl: mapboxgl
-                }));
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+      
+    }), 'top-left');
 
     // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
+    map.on('click', function (e) {
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['turisme']
+      });
+
+      if (!features.length) {
+        return;
+      }
+
+      var feature = features[0];
+
+      var popup = new mapboxgl.Popup({ offset: [0, -15] })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML('<h3>' + feature.properties.NOM + '</h3><p>' + feature.properties.Tipus + '</p><p>' + feature.properties.Categoria + '</p><p>' + '<a target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>')
+        .addTo(map);
 
 
-    map.on('click', function(e) {
-  var features = map.queryRenderedFeatures(e.point, {
-    layers: ['turisme'] // name of the layer (a Mapbox)
-  });
+      // Centrem i fem zoom a les coordenades del punt seleccionat.
+      map.on('click', 'turisme', function (e) {
+        map.zoomTo(15, { center: e.features[0].geometry.coordinates });
 
-  if (!features.length) {
-    return;
-  }
-
-  var feature = features[0];
-
-  var popup = new mapboxgl.Popup({ offset: [0, -15] })
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.NOM + '</h3><p>' + feature.properties.Tipus + '</p><p>' + feature.properties.Categoria + '</p><p>' + '<a target="_blank" href='+ feature.properties.URL + '> Més informació' + '</p>')
-    .addTo(map);
+      });
 
 
-  // Centrem i fem zoom a les coordenades del punt seleccionat.
-  map.on('click', 'turisme', function (e) {
-  map.zoomTo(15, {center: e.features[0].geometry.coordinates});
-  
-  });
+      // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+      map.on('mouseenter', 'turisme', function () {
+        map.getCanvas().style.cursor = 'pointer';
+      });
 
-  
-  // Canviem el cursor a un punter quan passem per sobre un seleccionable.
-  map.on('mouseenter', 'turisme', function () {
-  map.getCanvas().style.cursor = 'pointer';
-  });
-  
-  // Retorn a la mà al desseleccionar.
-  map.on('mouseleave', 'turisme', function () {
-  map.getCanvas().style.cursor = '';
-  });
+      // Retorn a la mà al desseleccionar.
+      map.on('mouseleave', 'turisme', function () {
+        map.getCanvas().style.cursor = '';
+      });
 
 
-});
-    
-    </script>
-  </body>
+    });
+
+  </script>
+</body>
+
 </html>
