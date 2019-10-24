@@ -33,7 +33,8 @@
       container: 'map',
       style: 'mapbox://styles/marcrb3/ck23hso0c4p1l1cp3gxyzybop', //  your style URL
       center: [2.16859, 41.3954],
-      zoom: 10,
+      zoom: 10.5,
+      pitch: 20,
       attributionControl: true
     });
 
@@ -64,6 +65,26 @@
     .setLngLat(feature.geometry.coordinates)
     .setHTML('<h3>' + feature.properties.NOM + '</h3><p>' + feature.properties.Tipus + '</p><p>' + feature.properties.Categoria + '</p><p>' + '<a target="_blank" href='+ feature.properties.URL + '> Més informació' + '</p>')
     .addTo(map);
+
+
+  // Centrem i fem zoom a les coordenades del punt seleccionat.
+  map.on('click', 'turisme', function (e) {
+  map.zoomTo(15, {center: e.features[0].geometry.coordinates});
+  
+  });
+
+  
+  // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+  map.on('mouseenter', 'turisme', function () {
+  map.getCanvas().style.cursor = 'pointer';
+  });
+  
+  // Retorn a la mà al desseleccionar.
+  map.on('mouseleave', 'turisme', function () {
+  map.getCanvas().style.cursor = '';
+  });
+
+
 });
     
     </script>
