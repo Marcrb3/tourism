@@ -29,6 +29,21 @@
       bottom: 0;
       width: 100%;
     }
+    .link {
+      color: black;
+      text-decoration: none;
+      font-weight: bolder;
+      font-size: 14px;
+    }
+    .info {
+      background-color:rgba(248, 243, 225, 0.671);;
+      padding: 8px;
+      margin-top: 5px;
+      border: solid 1.5px rgb(97, 20, 20);
+    }
+    .infoimg{
+      width: 16px;
+    }
   </style>
 </head>
 
@@ -70,7 +85,15 @@
 
       var popup = new mapboxgl.Popup({ offset: [0, -15] })
         .setLngLat(feature.geometry.coordinates)
-        .setHTML('<h3>' + feature.properties.NOM + '</h3><p>' + feature.properties.Tipus + '</p><p>' + feature.properties.Categoria + '</p><p>' + '<a target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>')
+        .setHTML(
+          '<div class="info">'+
+          '<h3>' + feature.properties.NOM + '</h3><p>'
+           +'<strong>'+"Tipus:"+' '+'</strong>'+ feature.properties.Tipus
+           + '</p><p>'+'<strong>'+"Categoria:"+' '+'</strong>' + feature.properties.Categoria + '</p><p>'
+           +'<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
+           + '</div>'
+                
+                        )
         .addTo(map);
 
 
