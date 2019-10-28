@@ -29,25 +29,79 @@
       bottom: 0;
       width: 100%;
     }
+
+    .menu-ui {
+      background: rgb(248, 243, 225);
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      z-index: 1;
+      border-radius: 3px;
+      width: 150px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    .menu-ui a {
+      font-size: 12px;
+      font-family: verdana;
+      color: #404040;
+      display: block;
+      margin: 0;
+      padding: 0;
+      padding: 10px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .menu-ui a:first-child {
+      border-radius: 3px 3px 0 0;
+    }
+
+    .menu-ui a:last-child {
+      border: none;
+      border-radius: 0 0 3px 3px;
+    }
+
+    .menu-ui a:hover {
+      background: #f8f8f8;
+      color: #404040;
+    }
+
+    .menu-ui a.active,
+    .menu-ui a.active:hover {
+      background: rgb(190, 56, 56);
+      color: #FFF;
+    }
+
     .link {
       color: black;
       text-decoration: none;
       font-weight: bolder;
       font-size: 14px;
     }
+
     .info {
-      background-color:rgba(248, 243, 225, 0.671);;
+      background-color: rgba(248, 243, 225, 0.671);
+      ;
       padding: 8px;
       margin-top: 5px;
       border: solid 1.5px rgb(97, 20, 20);
     }
-    .infoimg{
+
+    .infoimg {
       width: 16px;
     }
   </style>
 </head>
 
 <body>
+  <nav id='menu-ui' class='menu-ui'>
+    <a href='#' class='active' id='filter-all'>Tots els indrets</a>
+    <a href='#' id='filter-natura'>Indrets Naturals</a>
+    <a href='#' id='filter-patrimoni'>Indrets Patrimonials</a>
+    <a href='#' id='filter-info'>Informació</a>
+  </nav>
   <div id='map'></div>
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
@@ -68,7 +122,7 @@
       accessToken: mapboxgl.accessToken,
       placeholder: "Cerca...",
       mapboxgl: mapboxgl
-      
+
     }), 'top-left');
 
     // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
@@ -87,38 +141,38 @@
       var popup = new mapboxgl.Popup({ offset: [0, -15] })
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
-          '<div class="info">'+
+          '<div class="info">' +
           '<h3>' + feature.properties.NOM + '</h3><p>'
-           +'<strong>'+"Tipus:"+' '+'</strong>'+ feature.properties.Tipus
-           + '</p><p>'+'<strong>'+"Categoria:"+' '+'</strong>' + feature.properties.Categoria + '</p><p>'
-           +'<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
-           + '</div>'
-                
+          + '<strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
+          + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
+          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
+          + '</div>'
+
         )
         .addTo(map);
     });
 
-      // Centrem i fem zoom a les coordenades del punt seleccionat.
+    // Centrem i fem zoom a les coordenades del punt seleccionat.
 
-      map.on('click', 'turisme', function (e) {
-        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+    map.on('click', 'turisme', function (e) {
+      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
 
-      });
-
-
-      // Canviem el cursor a un punter quan passem per sobre un seleccionable.
-
-      map.on('mouseenter', 'turisme', function () {
-        map.getCanvas().style.cursor = 'pointer';
-      });
-
-      // Retorn a la mà al desseleccionar.
-      map.on('mouseleave', 'turisme', function () {
-        map.getCanvas().style.cursor = '';
-      });
+    });
 
 
-    
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+
+    map.on('mouseenter', 'turisme', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'turisme', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+
+
 
   </script>
 </body>
