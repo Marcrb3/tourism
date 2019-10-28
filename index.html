@@ -15,6 +15,8 @@
   <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
   <style>
     body {
       margin: 0;
@@ -36,7 +38,7 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/marcrb3/ck23hso0c4p1l1cp3gxyzybop', //  your style URL
+      style: 'mapbox://styles/marcrb3/ck2a6fyu10ht71clfcj1xidnb', //  your style URL
       center: [2.16859, 41.3954],
       zoom: 10.5,
       pitch: 20,
@@ -49,7 +51,8 @@
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
+      placeholder: "Cerca...",
+      mapboxgl: mapboxgl
       
     }), 'top-left');
 
