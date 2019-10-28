@@ -72,6 +72,7 @@
     }), 'top-left');
 
     // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
+
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
         layers: ['turisme']
@@ -93,18 +94,20 @@
            +'<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
            + '</div>'
                 
-                        )
+        )
         .addTo(map);
-
+    });
 
       // Centrem i fem zoom a les coordenades del punt seleccionat.
+
       map.on('click', 'turisme', function (e) {
-        map.zoomTo(15, { center: e.features[0].geometry.coordinates });
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
 
       });
 
 
       // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+
       map.on('mouseenter', 'turisme', function () {
         map.getCanvas().style.cursor = 'pointer';
       });
@@ -115,7 +118,7 @@
       });
 
 
-    });
+    
 
   </script>
 </body>
