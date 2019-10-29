@@ -123,61 +123,7 @@
       zoom: 10,
       attributionControl: false
     });
-    
-//generem els filtres d'informacio
-    var natura = document.getElementById('filter-natura');
-    var patri = document.getElementById('filter-patrimoni');
-    var info = document.getElementById('filter-info');
-    var all = document.getElementById('filter-all');
-    var features = map.queryRenderedFeatures({layers: ['turisme']});
 
-    natura.onclick = function(e) {
-        all.className = '';
-        patri.className = '';
-        info.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        map.features.setFilter(function(f) {
-            return f.properties.Tipus == 'Natural';
-        });
-        return false;
-    };
-    patri.onclick = function(e) {
-        all.className = '';
-        natura.className = '';
-        info.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        map.features.setFilter(function(f) {
-            return f.properties.Tipus == 'Patrimonial';
-        });
-        return false;
-    };
-    info.onclick = function(e) {
-        all.className = '';
-        natura.className = '';
-        patri.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        map.features.setFilter(function(f) {
-            return f.properties.Tipus == 'Informacio';
-        });
-        return false;
-    };
-    all.onclick = function() {
-        natura.className = '';
-        patri.className = '';
-        info.className = '';
-        this.className = 'active';
-        map.features.setFilter(function(f) {
-            // Returning true for all markers shows everything.
-            return true;
-        });
-        return false;
-    };
 
     //afegim el control de navegació i el cercador
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
@@ -250,7 +196,7 @@
         )
         .addTo(map);
     });
-    
+ 
     // Centrem i fem zoom a les coordenades del punt seleccionat.
     map.on('click', 'turisme', function (e) {
       map.zoomTo(15.2, { center: e.features[0].geometry.coordinates });
@@ -263,6 +209,61 @@
     map.on('mouseleave', 'turisme', function () {
       map.getCanvas().style.cursor = '';
     });
+
+    //generem els filtres d'informacio
+    var natura = document.getElementById('filter-natura');
+    var patri = document.getElementById('filter-patrimoni');
+    var info = document.getElementById('filter-info');
+    var all = document.getElementById('filter-all');
+
+    natura.onclick = function(e) {
+        all.className = '';
+        patri.className = '';
+        info.className = '';
+        this.className = 'active';
+        // The setFilter function takes a GeoJSON feature object
+        // and returns true to show it or false to hide it.
+        features.setFilter(function(f) {
+            return f.properties['Tipus'] === 'Natural';
+        });
+        return false;
+    };
+    patri.onclick = function(e) {
+        all.className = '';
+        natura.className = '';
+        info.className = '';
+        this.className = 'active';
+        // The setFilter function takes a GeoJSON feature object
+        // and returns true to show it or false to hide it.
+        features.setFilter(function(f) {
+            return f.properties['Tipus'] === 'Patrimonial';
+        });
+        return false;
+    };
+    info.onclick = function(e) {
+        all.className = '';
+        natura.className = '';
+        patri.className = '';
+        this.className = 'active';
+        // The setFilter function takes a GeoJSON feature object
+        // and returns true to show it or false to hide it.
+        features.setFilter(function(f) {
+            return f.properties['Tipus'] === 'Informacio';
+        });
+        return false;
+    };
+    all.onclick = function() {
+        natura.className = '';
+        patri.className = '';
+        info.className = '';
+        this.className = 'active';
+        features.setFilter(function(f) {
+            // Returning true for all markers shows everything.
+            return true;
+        });
+        return false;
+    };
+
   </script>
 </body>
 
