@@ -226,7 +226,8 @@ function three(event) {
   console.log("event number 3", event);
 }
     
-
+map.addControl(new PitchToggle({ minpitchzoom: 11 }), "top-left");
+    
     // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
 
     map.on('click', function (e) {
