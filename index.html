@@ -132,33 +132,6 @@
       mapboxgl: mapboxgl
 
     }), 'top-left');
-
-    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
-
-    map.on('click', function (e) {
-      var features = map.queryRenderedFeatures(e.point, {
-        layers: ['turisme']
-      });
-
-      if (!features.length) {
-        return;
-      }
-
-      var feature = features[0];
-
-      var popup = new mapboxgl.Popup({ offset: [0, -15] })
-        .setLngLat(feature.geometry.coordinates)
-        .setHTML(
-          '<div class="info">' +
-          '<h3>' + feature.properties.NOM + '</h3><p>'
-          + '<strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
-          + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
-          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
-          + '</div>'
-
-        )
-        .addTo(map);
-    });
     
     // Original ES6 Class— https://github.com/tobinbradley/mapbox-gl-pitch-toggle-control
 // export default class PitchToggle {
@@ -205,7 +178,9 @@ class PitchToggle {
     this._map = undefined;
   }
 }
-    class MapboxGLButtonControl {
+
+/* Idea from Stack Overflow https://stackoverflow.com/a/51683226  */
+class MapboxGLButtonControl {
   constructor({
     className = "",
     title = "",
@@ -251,7 +226,34 @@ function three(event) {
   alert("Event handler when clicking on \r\n" + event.target.className);
   console.log("event number 3", event);
 }
-map.addControl(new PitchToggle({ minpitchzoom: 11 }), "bottom-left");
+    
+
+    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
+
+    map.on('click', function (e) {
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['turisme']
+      });
+
+      if (!features.length) {
+        return;
+      }
+
+      var feature = features[0];
+
+      var popup = new mapboxgl.Popup({ offset: [0, -15] })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(
+          '<div class="info">' +
+          '<h3>' + feature.properties.NOM + '</h3><p>'
+          + '<strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
+          + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
+          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
+          + '</div>'
+
+        )
+        .addTo(map);
+    });
     
     // Centrem i fem zoom a les coordenades del punt seleccionat.
 
@@ -259,7 +261,6 @@ map.addControl(new PitchToggle({ minpitchzoom: 11 }), "bottom-left");
       map.zoomTo(14, { center: e.features[0].geometry.coordinates });
 
     });
-
 
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
 
