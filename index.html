@@ -15,10 +15,11 @@
   <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-    	crossorigin="anonymous">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-    	crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+    integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+    integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+    crossorigin="anonymous"></script>
 
 
   <style>
@@ -26,101 +27,75 @@
       margin: 0;
       padding: 0;
     }
-    
+
+    h3 {
+      font-size: 18px;
+      text-align: center;
+      font-weight: bolder;
+      padding: 5px;
+    }
+
     .mapboxgl-ctrl-pitchtoggle-3d {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjNEPC90ZXh0Pjwvc3ZnPg==);
       top: 50px;
     }
+
     .mapboxgl-ctrl-pitchtoggle-2d {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjJEPC90ZXh0Pjwvc3ZnPg==);
       top: 50px;
     }
+
     #map {
       position: absolute;
       top: 50px;
       bottom: 0;
       width: 100%;
     }
-    .menu-ui {
-      background: rgb(248, 243, 225);
-      position: absolute;
-      top: 50px;
-      left: 10px;
-      z-index: 1;
-      border-radius: 3px;
-      width: 150px;
-      border: 1px solid rgba(0, 0, 0, 0.4);
-    }
-    .menu-ui a {
-      font-size: 12px;
-      font-family: verdana;
-      color: #404040;
-      display: block;
-      margin: 0;
-      padding: 0;
-      padding: 10px;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-      text-align: center;
-    }
-    .menu-ui a:first-child {
-      border-radius: 3px 3px 0 0;
-    }
-    .menu-ui a:last-child {
-      border: none;
-      border-radius: 0 0 3px 3px;
-    }
-    .menu-ui a:hover {
-      background: #f8f8f8;
-      color: #404040;
-    }
-    .menu-ui a.active,
-    .menu-ui a.active:hover {
-      background: rgb(190, 56, 56);
-      color: #FFF;
-    }
+
     .link {
       color: black;
       text-decoration: none;
       font-weight: bolder;
       font-size: 14px;
     }
-    .info {
+
+    .infowdw {
       background-color: rgba(248, 243, 225, 0.671);
-      ;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 10px;
+      margin-top: 15px;
       border: solid 1.5px rgb(97, 20, 20);
     }
+
     .infoimg {
-      width: 16px;
+      width: 18px;
     }
   </style>
 </head>
 
 <body onload="init()">
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<a class="navbar-brand" href="#">Turisme (en desenvolupament)</a>
-  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-   		 <span class="navbar-toggler-icon"></span>
-  		</button>
-  		<div class="collapse navbar-collapse" id="navbarNav">
-    		<ul class="navbar-nav">
-      		<li class="nav-item active">
-       		 <a class="nav-link" href="index.html">Tots els indrets<span class="sr-only">(current)</span></a>
-     		 </li>
-      		<li class="nav-item">
-      		  <a class="nav-link" href="patri.html">Patrimoni</a>
-     		 </li>
-     		 <li class="nav-item">
-       		 <a class="nav-link" href="natura.html">Natura</a>
-     		 </li>
-		<li class="nav-item">
-       		 <a class="nav-link" href="infomap.html">InformaciÛ</a>
-     		 </li>
-    		</ul>
-  		</div>
-	</nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Turisme (en desenvolupament)</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Tots els indrets<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="patri.html">Patrimoni</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="natura.html">Natura</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="infomap.html">Informaci√≥</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <div id='map'></div>
   <script>
@@ -132,7 +107,7 @@
       zoom: 10,
       attributionControl: false
     });
-    //afegim el control de navegaciÛ i el cercador
+    //afegim el control de navegaci√≥ i el cercador
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new MapboxGeocoder({
@@ -140,7 +115,7 @@
       placeholder: "Cerca...",
       mapboxgl: mapboxgl
     }), 'top-left');
-    // Afegim botÛ amb opciÛ de visualitzaciÛ 2D/3D 
+    // Afegim bot√≥ amb opci√≥ de visualitzaci√≥ 2D/3D 
     class PitchToggle {
       constructor({ bearing = -20, pitch = 50, minpitchzoom = null }) {
         this._bearing = bearing;
@@ -180,7 +155,7 @@
       }
     }
     map.addControl(new PitchToggle({ minpitchzoom: 11 }), "top-right");
-    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaÁ a la web amb mÈs informaciÛ(de moment)
+    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enlla√ß a la web amb m√©s informaci√≥(de moment)
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
         layers: ['turisme']
@@ -192,16 +167,16 @@
       var popup = new mapboxgl.Popup({ offset: [0, -15] })
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
-          '<div class="info">' +
+          '<div class="infowdw">' +
           '<h3>' + feature.properties.NOM + '</h3><p>'
           + '<strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
           + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
-          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> MÈs informaciÛ' + '</p>'
+          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> M√©s informaci√≥' + '</p>'
           + '</div>'
         )
         .addTo(map);
     });
- 
+
     // Centrem i fem zoom a les coordenades del punt seleccionat.
     map.on('click', 'turisme', function (e) {
       map.zoomTo(15.2, { center: e.features[0].geometry.coordinates });
@@ -210,62 +185,11 @@
     map.on('mouseenter', 'turisme', function () {
       map.getCanvas().style.cursor = 'pointer';
     });
-    // Retorn a la m‡ al desseleccionar.
+    // Retorn a la m√† al desseleccionar.
     map.on('mouseleave', 'turisme', function () {
       map.getCanvas().style.cursor = '';
     });
-    //generem els filtres d'informacio
-    var natura = document.getElementById('filter-natura');
-    var patri = document.getElementById('filter-patrimoni');
-    var info = document.getElementById('filter-info');
-    var all = document.getElementById('filter-all');
-    natura.onclick = function(e) {
-        all.className = '';
-        patri.className = '';
-        info.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        features.setFilter(function(f) {
-            return f.properties['Tipus'] === 'Natural';
-        });
-        return false;
-    };
-    patri.onclick = function(e) {
-        all.className = '';
-        natura.className = '';
-        info.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        features.setFilter(function(f) {
-            return f.properties['Tipus'] === 'Patrimonial';
-        });
-        return false;
-    };
-    info.onclick = function(e) {
-        all.className = '';
-        natura.className = '';
-        patri.className = '';
-        this.className = 'active';
-        // The setFilter function takes a GeoJSON feature object
-        // and returns true to show it or false to hide it.
-        features.setFilter(function(f) {
-            return f.properties['Tipus'] === 'Informacio';
-        });
-        return false;
-    };
-    all.onclick = function() {
-        natura.className = '';
-        patri.className = '';
-        info.className = '';
-        this.className = 'active';
-        features.setFilter(function(f) {
-            // Returning true for all markers shows everything.
-            return true;
-        });
-        return false;
-    };
+
   </script>
 </body>
 
