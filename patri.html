@@ -107,13 +107,14 @@
       attributionControl: false
     });
     //afegim el control de navegació i el cercador
-    map.addControl(new mapboxgl.AttributionControl({ compact: true }));
-    map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       placeholder: "Cerca...",
       mapboxgl: mapboxgl
-    }), 'top-left');
+    }), 'top-right');
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+    map.addControl(new mapboxgl.NavigationControl());
+   
     // Afegim botó amb opció de visualització 2D/3D 
     class PitchToggle {
       constructor({ bearing = -20, pitch = 50, minpitchzoom = null }) {
