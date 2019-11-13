@@ -59,10 +59,8 @@
         }
     
         .infowdw {
-          padding: 10px;
           margin-top: 10px;
-          border: solid 1.5px rgb(97, 20, 20);
-        }
+                 }
     
         .infoimg {
           width: 18px;
@@ -177,7 +175,7 @@
           '<h3>' + feature.properties.NOM + '</h3><p>'
           + '<strong>' + "Municipi:" + ' ' + '</strong>' + feature.properties.MUNICIPI
           + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
-          + '<img class="infoimg" src="goto.png"/><a class="link" target="_blank" href=' + feature.properties.URL + '> Més informació' + '</p>'
+          + '<a class="btn btn-outline-danger btn-sm" target="_blank" href=' + feature.properties.URL + ' role="button"> Més informació' + '</a></p>'
           + '</div>'
         )
         .addTo(map);
