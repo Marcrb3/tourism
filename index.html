@@ -51,6 +51,10 @@
       bottom: 0;
       width: 100%;
     }
+    .imgs{
+      text-align:center;
+    }
+
 
     .link {
       color: black;
@@ -60,15 +64,24 @@
     }
 
     .infowdw {
-      padding: 10px;    
+      padding: 10px;
     }
 
     .infoimg {
       width: 18px;
     }
+
+    .infopop {
+      width: 180px;
+     margin:auto;
+    }
+    .btn{
+margin:auto;
+    }
+
     .infoimg2 {
       width: 85px;
-      padding-right:5px;
+      padding-right: 5px;
       padding-bottom: 1px;
     }
   </style>
@@ -77,9 +90,9 @@
 <body onload="init()">
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
     <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
-        <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme 
-  </a>
-     
+      <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme
+    </a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -107,7 +120,7 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/marcrb3/ck2a6fyu10ht71clfcj1xidnb', //  your style URL
+      style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  your style URL
       center: [2.16859, 41.3954],
       zoom: 10,
       attributionControl: false
@@ -115,12 +128,13 @@
     //afegim el control de navegació i el cercador
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
+      countries: "es",
       placeholder: "Cerca...",
       mapboxgl: mapboxgl
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
-    
+
     // Afegim botó amb opció de visualització 2D/3D 
     class PitchToggle {
       constructor({ bearing = -20, pitch = 50, minpitchzoom = null }) {
@@ -164,7 +178,7 @@
     // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
-        layers: ['turisme']
+        layers: ['turismeweb']
       });
       if (!features.length) {
         return;
@@ -174,9 +188,10 @@
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
           '<div class="infowdw">' +
-          '<h3>' + feature.properties.NOM + '</h3><p>'
-          + '<strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
-          + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p>'
+          '<h3>' + feature.properties.NOM + '</h3>'
+          + '<p class="imgs"><img class="infopop" src=' + feature.properties.IMG + '/></p>' 
+          + '<p class="wdwdesc"><strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
+          + '</p><p class="wdwdesc">' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p class="btn">'
           + '<a class="btn btn-outline-danger btn-sm" target="_blank" href=' + feature.properties.URL + ' role="button"> Més informació' + '</a></p>'
           + '</div>'
         )
@@ -184,15 +199,15 @@
     });
 
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'turisme', function (e) {
+    map.on('click', 'turismeweb', function (e) {
       map.zoomTo(13, { center: e.features[0].geometry.coordinates });
     });
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
-    map.on('mouseenter', 'turisme', function () {
+    map.on('mouseenter', 'turismeweb', function () {
       map.getCanvas().style.cursor = 'pointer';
     });
     // Retorn a la mà al desseleccionar.
-    map.on('mouseleave', 'turisme', function () {
+    map.on('mouseleave', 'turismeweb', function () {
       map.getCanvas().style.cursor = '';
     });
 

@@ -114,6 +114,7 @@
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       placeholder: "Cerca...",
+      countries: "es",
       mapboxgl: mapboxgl
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
