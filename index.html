@@ -51,8 +51,9 @@
       bottom: 0;
       width: 100%;
     }
-    .imgs{
-      text-align:center;
+
+    .imgs {
+      text-align: center;
     }
 
 
@@ -73,10 +74,11 @@
 
     .infopop {
       width: 180px;
-     margin:auto;
+      margin: auto;
     }
-    .btn{
-margin:auto;
+
+    .btn {
+      margin: auto;
     }
 
     .infoimg2 {
@@ -134,6 +136,13 @@ margin:auto;
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
+    // Add geolocate control to the map.
+    map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
 
     // Afegim botó amb opció de visualització 2D/3D 
     class PitchToggle {
@@ -189,7 +198,7 @@ margin:auto;
         .setHTML(
           '<div class="infowdw">' +
           '<h3>' + feature.properties.NOM + '</h3>'
-          + '<p class="imgs"><img class="infopop" src=' + feature.properties.IMG + '/></p>' 
+          + '<p class="imgs"><img class="infopop" src=' + feature.properties.IMG + '/></p>'
           + '<p class="wdwdesc"><strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
           + '</p><p class="wdwdesc">' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p class="btn">'
           + '<a class="btn btn-outline-danger btn-sm" target="_blank" href=' + feature.properties.URL + ' role="button"> Més informació' + '</a></p>'

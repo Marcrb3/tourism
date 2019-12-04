@@ -119,6 +119,14 @@
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
+
+    // Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl({
+positionOptions: {
+enableHighAccuracy: true
+},
+trackUserLocation: true
+}));
     
     // Afegim botó amb opció de visualització 2D/3D 
     class PitchToggle {
