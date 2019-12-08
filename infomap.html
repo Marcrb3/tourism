@@ -191,8 +191,13 @@ trackUserLocation: true
     });
  
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'info', function (e) {
-      map.zoomTo(13, { center: e.features[0].geometry.coordinates });
+    map.on('click', 'turismeweb', function (e) {
+      if(map.getZoom() < 14){
+      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else{
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
     });
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
     map.on('mouseenter', 'info', function () {

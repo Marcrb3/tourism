@@ -119,14 +119,16 @@
 
   <div id='map'></div>
   <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  el meu token a Mapbox
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  your style URL
+      style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  el meu estil de mapa a Mapbox
       center: [2.16859, 41.3954],
       zoom: 10,
       attributionControl: false
     });
+
+
     //afegim el control de navegació i el cercador
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
@@ -136,7 +138,9 @@
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
-    // Add geolocate control to the map.
+
+
+    // Afegim el geolocalitzador (pensat per a dispositius mòbils)
     map.addControl(new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
@@ -184,7 +188,9 @@
       }
     }
     map.addControl(new PitchToggle({ minpitchzoom: 11 }), "top-right");
-    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
+
+
+    // afegim pop-ups que ens mostrin nom del lloc, la categoria, l'enllaç a la web amb més informació i una imatge
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
         layers: ['turismeweb']
@@ -209,7 +215,12 @@
 
     // Centrem i fem zoom a les coordenades del punt seleccionat.
     map.on('click', 'turismeweb', function (e) {
-      map.zoomTo(13, { center: e.features[0].geometry.coordinates });
+      if(map.getZoom() < 14){
+      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else{
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
     });
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
     map.on('mouseenter', 'turismeweb', function () {
@@ -220,6 +231,8 @@
       map.getCanvas().style.cursor = '';
     });
 
+    
+    
   </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
