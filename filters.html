@@ -2,13 +2,12 @@
 <html>
 
 <head>
-  <meta charset='utf-8' />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Turisme a l'AMB</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-  <script
+    <meta charset="utf-8" />
+    <title>Display driving directions</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css" rel="stylesheet" />
+    <script
     src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet'
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css'
@@ -19,11 +18,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-
-
-
-  <style>
-    body {
+    <style>
+          body {
       margin: 0;
       padding: 0;
     }
@@ -86,60 +82,71 @@
       padding-right: 5px;
       padding-bottom: 1px;
     }
-  </style>
+
+        
+    </style>
 </head>
-<!--Generem la navbar amb links als diferents mapes-->
+
 <body onload="init()">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
-    <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
-      <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme
-    </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
+        <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
+            <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme
+        </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="defaultNavbar1">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">Tots els indrets<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="patri.html">Patrimoni</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="natura.html">Natura</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="infomap.html">Informació</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="filters.html">Com arribar?</a>
-          </li>
-      </ul>
-    </div>
-  </nav>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="defaultNavbar1">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Tots els indrets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="patri.html">Patrimoni</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="natura.html">Natura</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="infomap.html">Informació</a>
+                </li>
+                <li class="nav-item active">
+                        <a class="nav-link" href="filters.html">Com arribar?<span class="sr-only">(current)</span></a>
+                    </li>
+            </ul>
+        </div>
+    </nav>
 
-  <div id='map'></div>
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  el meu token a Mapbox
-    var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  el meu estil de mapa a Mapbox
-      center: [2.16859, 41.3954],
-      zoom: 10,
-      attributionControl: false
-    });
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
+        type="text/css" />
+    <div id="map"></div>
 
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  el meu estil de mapa a Mapbox
+            center: [2.16859, 41.3954],
+            zoom: 10,
+            attributionControl: false
+        });
 
-    //afegim el control de navegació i el cercador
-    map.addControl(new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      countries: "es",
-      placeholder: "Cerca...",
-      mapboxgl: mapboxgl
-    }), 'top-right');
-    map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+        map.addControl(
+            new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+                unit: "metric",
+                language: 'es',
+                placeholderDestination: "Tria una destinació.",
+                placeholderOrigin: "Tria un punt d'inici.",
+                placeholderDriving:"Conduint"
+            }),
+            'top-left'
+        );
+        map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
 
 
@@ -217,14 +224,7 @@
     });
 
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'turismeweb', function (e) {
-      if(map.getZoom() < 14){
-      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
-      }
-      else{
-        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
-      }
-    });
+   
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
     map.on('mouseenter', 'turismeweb', function () {
       map.getCanvas().style.cursor = 'pointer';
@@ -234,19 +234,16 @@
       map.getCanvas().style.cursor = '';
     });
 
-    
-    
-  </script>
-
+    </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"></script>
 </body>
 
 </html>

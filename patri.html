@@ -94,7 +94,10 @@
      		 </li>
 		<li class="nav-item">
        		 <a class="nav-link" href="infomap.html">Informació</a>
-     		 </li>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="filters.html">Com arribar?</a>
+            </li>
     		</ul>
   		</div>
 	</nav>
@@ -190,7 +193,7 @@ trackUserLocation: true
     });
  
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'turismeweb', function (e) {
+    map.on('click', 'patri', function (e) {
       if(map.getZoom() < 14){
       map.zoomTo(14, { center: e.features[0].geometry.coordinates });
       }
