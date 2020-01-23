@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset='utf-8' />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8" />
   <title>Turisme a l'AMB</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css" rel="stylesheet" />
   <script
     src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet'
@@ -19,76 +18,126 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-
-
-
   <style>
     body {
       margin: 0;
       padding: 0;
     }
 
-    h3 {
-      font-size: 16px;
-      text-align: center;
-      font-weight: bolder;
-      padding: 5px;
-    }
-
-    .mapboxgl-ctrl-pitchtoggle-3d {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjNEPC90ZXh0Pjwvc3ZnPg==);
-      top: 50px;
-    }
-
-    .mapboxgl-ctrl-pitchtoggle-2d {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjJEPC90ZXh0Pjwvc3ZnPg==);
-      top: 50px;
-    }
-
     #map {
       position: absolute;
-      top: 50px;
+      top: 0;
       bottom: 0;
       width: 100%;
     }
 
-    .imgs {
-      text-align: center;
-    }
-
-
-    .link {
-      color: black;
-      text-decoration: none;
-      font-weight: bolder;
-      font-size: 14px;
-    }
-
-    .infowdw {
-      padding: 10px;
-    }
-
-    .infoimg {
-      width: 18px;
-    }
-
-    .infopop {
-      width: 180px;
-      margin: auto;
-    }
-
-    .btn {
-      margin: auto;
-    }
-
-    .infoimg2 {
-      width: 85px;
-      padding-right: 5px;
-      padding-bottom: 1px;
-    }
+    ;
   </style>
 </head>
-<!--Generem la navbar amb links als diferents mapes-->
+
+<style>
+  #menu {
+    background: #ECE7CA;
+    position: absolute;
+    z-index: 1;
+    top: 70px;
+    left: 10px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  #menu a {
+    font-size: 13px;
+    color: #771B0D;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+  }
+
+  #menu a:last-child {
+    border: none;
+  }
+
+  #menu a:hover {
+    background-color: #ECE7CA;
+    color: #404040;
+  }
+
+  #menu a.active {
+    background-color: #A73D2A;
+    color: #ffffff;
+  }
+
+  #menu a.active:hover {
+    background: #8A3223;
+  }
+
+  h3 {
+    font-size: 16px;
+    text-align: center;
+    font-weight: bolder;
+    padding: 5px;
+  }
+
+  .mapboxgl-ctrl-pitchtoggle-3d {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjNEPC90ZXh0Pjwvc3ZnPg==);
+    top: 50px;
+  }
+
+  .mapboxgl-ctrl-pitchtoggle-2d {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjJEPC90ZXh0Pjwvc3ZnPg==);
+    top: 50px;
+  }
+
+  #map {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .imgs {
+    text-align: center;
+  }
+
+
+  .link {
+    color: black;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 14px;
+  }
+
+  .infowdw {
+    padding: 10px;
+  }
+
+  .infoimg {
+    width: 18px;
+  }
+
+  .infopop {
+    width: 180px;
+    margin: auto;
+  }
+
+  .btn {
+    margin: auto;
+  }
+
+  .infoimg2 {
+    width: 85px;
+    padding-right: 5px;
+    padding-bottom: 1px;
+  }
+</style>
+
 <body onload="init()">
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
     <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
@@ -114,25 +163,112 @@
           <a class="nav-link" href="infomap.html">Informació</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="filters.html">Com arribar?</a>
-          </li>
+          <a class="nav-link" href="filters.html">Com arribar?</a>
+        </li>
       </ul>
     </div>
   </nav>
+  <nav id="menu"></nav>
+  <div id="map"></div>
 
-  <div id='map'></div>
   <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  el meu token a Mapbox
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA';
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/marcrb3/ck2dltzxz0ith1dnyg4lz48fn', //  el meu estil de mapa a Mapbox
+      style: 'mapbox://styles/marcrb3/ck5qmqq8d75bx1intw8xu81zt', //  el meu estil de mapa a Mapbox
       center: [2.16859, 41.3954],
       zoom: 10,
       attributionControl: false
     });
 
+    map.on('load', function () {
+      map.addSource('natura-2lyqzu', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.8byvap0z'
+      });
+      map.addLayer({
+        'id': 'Natura',
+        'type': 'circle',
+        'source': 'natura-2lyqzu',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#598846'
+        },
+        'source-layer': 'natura-2lyqzu'
+      });
 
-    //afegim el control de navegació i el cercador
+      map.addSource('patrimoni-73v511', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.d2xcvvac'
+      });
+      map.addLayer({
+        'id': 'Patrimoni',
+        'type': 'circle',
+        'source': 'patrimoni-73v511',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#DCC844'
+        },
+        'source-layer': 'patrimoni-73v511'
+      });
+
+      map.addSource('infoamb', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.ck5qxt4i909wd2in5ld157erv-53gz8'
+      });
+      map.addLayer({
+        'id': 'Informació',
+        'type': 'circle',
+        'source': 'infoamb',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#EA5A5A'
+        },
+        'source-layer': 'infoamb'
+      });
+
+    });
+
+    var toggleableLayerIds = ['Natura', 'Patrimoni', 'Informació'];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i];
+
+      var link = document.createElement('a');
+      link.href = '#';
+      link.className = 'active';
+      link.textContent = id;
+
+      link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+        } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+      };
+
+      var layers = document.getElementById('menu');
+      layers.appendChild(link);
+    }
+
+
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       countries: "es",
@@ -196,7 +332,7 @@
     // afegim pop-ups que ens mostrin nom del lloc, la categoria, l'enllaç a la web amb més informació i una imatge
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
-        layers: ['turismeweb']
+        layers: ['Natura', 'Patrimoni', 'Informació']
       });
       if (!features.length) {
         return;
@@ -217,27 +353,58 @@
     });
 
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'turismeweb', function (e) {
-      if(map.getZoom() < 14){
-      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+    map.on('click', 'Natura', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
       }
-      else{
+      else {
         map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
       }
     });
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
-    map.on('mouseenter', 'turismeweb', function () {
+    map.on('mouseenter', 'Natura', function () {
       map.getCanvas().style.cursor = 'pointer';
     });
     // Retorn a la mà al desseleccionar.
-    map.on('mouseleave', 'turismeweb', function () {
+    map.on('mouseleave', 'Natura', function () {
       map.getCanvas().style.cursor = '';
     });
 
-    
-    
-  </script>
+    map.on('click', 'Patrimoni', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else {
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
+    });
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+    map.on('mouseenter', 'Patrimoni', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'Patrimoni', function () {
+      map.getCanvas().style.cursor = '';
+    });
 
+    map.on('click', 'Informació', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else {
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
+    });
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+    map.on('mouseenter', 'Informació', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'Informació', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+  </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -247,6 +414,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
 </body>
 
 </html>
