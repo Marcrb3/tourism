@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset='utf-8' />
+  <meta charset="utf-8" />
   <title>Turisme a l'AMB</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css" rel="stylesheet" />
   <script
     src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet'
@@ -15,105 +15,277 @@
   <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-    	crossorigin="anonymous">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-    	crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-
-      <style>
-        body {
-          margin: 0;
-          padding: 0;
-        }
-    
-        h3 {
-          font-size: 16px;
-          text-align: center;
-          font-weight: bolder;
-          padding: 5px;
-        }
-    
-        .mapboxgl-ctrl-pitchtoggle-3d {
-          background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjNEPC90ZXh0Pjwvc3ZnPg==);
-          top: 50px;
-        }
-    
-        .mapboxgl-ctrl-pitchtoggle-2d {
-          background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjJEPC90ZXh0Pjwvc3ZnPg==);
-          top: 50px;
-        }
-    
-        #map {
-          position: absolute;
-          top: 50px;
-          bottom: 0;
-          width: 100%;
-        }
-    
-        .link {
-          color: black;
-          text-decoration: none;
-          font-weight: bolder;
-          font-size: 14px;
-        }
-    
-        .infowdw {
-          padding: 10px;  
-        }
-    
-        .infoimg {
-          width: 18px;
-        }
-        .infoimg2 {
-      width: 85px;
-      padding-right:5px;
-      padding-bottom: 1px;
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
     }
-      </style>
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    ;
+  </style>
 </head>
 
- <body onload="init()">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
-    <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
-      <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme 
-</a>
-  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-   		 <span class="navbar-toggler-icon"></span>
-  		</button>
-  		<div class="collapse navbar-collapse" id="navbarNav">
-    		<ul class="navbar-nav">
-      		<li class="nav-item">
-       		 <a class="nav-link" href="index.html">Tots els indrets</a>
-     		 </li>
-      		<li class="nav-item">
-      		  <a class="nav-link" href="patri.html">Patrimoni</a>
-     		 </li>
-     		 <li class="nav-item active">
-       		 <a class="nav-link" href="natura.html">Natura<span class="sr-only">(current)</span></a>
-     		 </li>
-		<li class="nav-item">
-       		 <a class="nav-link" href="infomap.html">Informació</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="filters.html">Com arribar?</a>
-            </li>
-    		</ul>
-  		</div>
-	</nav>
+<style>
+  #menu {
+    background: #ECE7CA;
+    position: absolute;
+    z-index: 1;
+    top: 70px;
+    left: 10px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans', sans-serif;
+  }
 
-  <div id='map'></div>
+  #menu a {
+    font-size: 13px;
+    color: #771B0D;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+  }
+
+  #menu a:last-child {
+    border: none;
+  }
+
+  #menu a:hover {
+    background-color: #ECE7CA;
+    color: #404040;
+  }
+
+  #menu a.active {
+    background-color: #A73D2A;
+    color: #ffffff;
+  }
+
+  #menu a.active:hover {
+    background: #8A3223;
+  }
+
+  h3 {
+    font-size: 16px;
+    text-align: center;
+    font-weight: bolder;
+    padding: 5px;
+  }
+
+  .mapboxgl-ctrl-pitchtoggle-3d {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjNEPC90ZXh0Pjwvc3ZnPg==);
+    top: 50px;
+  }
+
+  .mapboxgl-ctrl-pitchtoggle-2d {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+ICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHN0eWxlPSJmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAnSGVsdmV0aWNhIE5ldWUnLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbmNob3I6IG1pZGRsZTsiPjJEPC90ZXh0Pjwvc3ZnPg==);
+    top: 50px;
+  }
+
+  #map {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .imgs {
+    text-align: center;
+  }
+
+
+  .link {
+    color: black;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 14px;
+  }
+
+  .infowdw {
+    padding: 10px;
+  }
+
+  .infoimg {
+    width: 18px;
+  }
+
+  .infopop {
+    width: 180px;
+    margin: auto;
+  }
+
+  .btn {
+    margin: auto;
+  }
+
+  .infoimg2 {
+    width: 85px;
+    padding-right: 5px;
+    padding-bottom: 1px;
+  }
+</style>
+
+<body onload="init()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index:1000;">
+        <a class="navbar-brand" style="font-weight: bold;" href="https://www.amb.cat">
+          <img class="infoimg2" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/AMB_logo_1.png"> Turisme 
+    </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Tots els indrets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="patri.html">Patrimoni</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="natura.html">Natura<span class="sr-only">(current)</span></a>
+                  </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="infomap.html">Informació</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="filters.html">Com arribar?</a>
+                </li>
+                </ul>
+              </div>
+        </nav>
+  <nav id="menu"></nav>
+  <div id="map"></div>
 
   <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA'; //  your access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFyY3JiMyIsImEiOiJjanJqanZvMXowYzdnNDRsbGN4N3JyMGhuIn0.im2TOkqyqEpCXhN4LWoZuA';
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/marcrb3/cjst8y4l6fpo01fporoqv29gp', //  your style URL
+      style: 'mapbox://styles/marcrb3/ck6qdum4r0pz61io08lxfz9af', //  el meu estil de mapa a Mapbox
       center: [2.16859, 41.3954],
       zoom: 10,
       attributionControl: false
     });
-    //afegim el control de navegació i el cercador
+
+    map.on('load', function () {
+      map.addSource('Muntanya-7wm1yk', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.5lq2qu5y'
+      });
+      map.addLayer({
+        'id': 'Muntanya',
+        'type': 'circle',
+        'source': 'Muntanya-7wm1yk',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#598846'
+        },
+        'source-layer': 'Muntanya-7wm1yk'
+      });
+
+      map.addSource('Platges-6t5ue7', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.chr1i6g2'
+      });
+      map.addLayer({
+        'id': 'Platges',
+        'type': 'circle',
+        'source': 'Platges-6t5ue7',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#DCC844'
+        },
+        'source-layer': 'Platges-6t5ue7'
+      });
+
+      map.addSource('Parcs-9hme1m', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.7pl2od4e'
+      });
+      map.addLayer({
+        'id': 'Parcs metropolitans',
+        'type': 'circle',
+        'source': 'Parcs-9hme1m',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#EA5A5A'
+        },
+        'source-layer': 'Parcs-9hme1m'
+      });
+
+      map.addSource('Riu-6ow2av', {
+        type: 'vector',
+        url: 'mapbox://marcrb3.cjsxs2gy'
+      });
+      map.addLayer({
+        'id': 'Espais fluvials',
+        'type': 'circle',
+        'source': 'Riu-6ow2av',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'circle-radius': 5,
+          'circle-color': '#EA5A5A'
+        },
+        'source-layer': 'Riu-6ow2av'
+      });
+
+    });
+
+    var toggleableLayerIds = ['Muntanya', 'Platges', 'Parcs metropolitans', 'Espais fluvials'];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i];
+
+      var link = document.createElement('a');
+      link.href = '#';
+      link.className = 'active';
+      link.textContent = id;
+
+      link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+        } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+      };
+
+      var layers = document.getElementById('menu');
+      layers.appendChild(link);
+    }
+
+   
+
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       countries: "es",
@@ -123,14 +295,15 @@
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
     map.addControl(new mapboxgl.NavigationControl());
 
-    // Add geolocate control to the map.
-map.addControl(new mapboxgl.GeolocateControl({
-positionOptions: {
-enableHighAccuracy: true
-},
-trackUserLocation: true
-}));
-   
+
+    // Afegim el geolocalitzador (pensat per a dispositius mòbils)
+    map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
+
     // Afegim botó amb opció de visualització 2D/3D 
     class PitchToggle {
       constructor({ bearing = -20, pitch = 50, minpitchzoom = null }) {
@@ -171,10 +344,12 @@ trackUserLocation: true
       }
     }
     map.addControl(new PitchToggle({ minpitchzoom: 11 }), "top-right");
-    // afegim pop-ups que ens mostrin nom del lloc, la categoria i l'enllaç a la web amb més informació(de moment)
+
+
+    // afegim pop-ups que ens mostrin nom del lloc, la categoria, l'enllaç a la web amb més informació i una imatge
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
-        layers: ['natura']
+        layers: ['Muntanya', 'Platges', 'Parcs metropolitans', 'Espais fluvials']
       });
       if (!features.length) {
         return;
@@ -184,37 +359,97 @@ trackUserLocation: true
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
           '<div class="infowdw">' +
-          '<h3>' + feature.properties.NOM + '</h3><p>'
-          + '<strong>' + "Municipi:" + ' ' + '</strong>' + feature.properties.MUNICIPI
-          + '</p><p>' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.CATEGORIA + '</p><p>'
+          '<h3>' + feature.properties.NOM + '</h3>'
+          + '<p class="imgs"><img class="infopop" src=' + feature.properties.IMG + '/></p>'
+          + '<p class="wdwdesc"><strong>' + "Tipus:" + ' ' + '</strong>' + feature.properties.Tipus
+          + '</p><p class="wdwdesc">' + '<strong>' + "Categoria:" + ' ' + '</strong>' + feature.properties.Categoria + '</p><p class="btn">'
           + '<a class="btn btn-outline-danger btn-sm" target="_blank" href=' + feature.properties.URL + ' role="button"> Més informació' + '</a></p>'
           + '</div>'
         )
         .addTo(map);
     });
- 
+
     // Centrem i fem zoom a les coordenades del punt seleccionat.
-    map.on('click', 'natura', function (e) {
-      if(map.getZoom() < 14){
-      map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+    map.on('click', 'Muntanya', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
       }
-      else{
+      else {
         map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
       }
     });
     // Canviem el cursor a un punter quan passem per sobre un seleccionable.
-    map.on('mouseenter', 'natura', function () {
+    map.on('mouseenter', 'Muntanya', function () {
       map.getCanvas().style.cursor = 'pointer';
     });
     // Retorn a la mà al desseleccionar.
-    map.on('mouseleave', 'natura', function () {
+    map.on('mouseleave', 'Muntanya', function () {
       map.getCanvas().style.cursor = '';
     });
 
+    map.on('click', 'Platges', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else {
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
+    });
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+    map.on('mouseenter', 'Platges', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'Platges', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'Parcs metropolitans', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else {
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
+    });
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+    map.on('mouseenter', 'Parcs metropolitans', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'Parcs metropolitans', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+    map.on('click', 'Espais fluvials', function (e) {
+      if (map.getZoom() < 14) {
+        map.zoomTo(14, { center: e.features[0].geometry.coordinates });
+      }
+      else {
+        map.zoomTo(map.getZoom(), { center: e.features[0].geometry.coordinates });
+      }
+    });
+    // Canviem el cursor a un punter quan passem per sobre un seleccionable.
+    map.on('mouseenter', 'Espais fluvials', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    // Retorn a la mà al desseleccionar.
+    map.on('mouseleave', 'Espais fluvials', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+
   </script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
 </body>
 
 </html>
