@@ -37,12 +37,12 @@
 
 <style>
   #menu {
-    background: #ECE7CA;
+    background: #d8d7cb;
     position: absolute;
     z-index: 1;
     top: 70px;
     left: 10px;
-    border-radius: 3px;
+    border-radius:3px;
     width: 120px;
     border: 1px solid rgba(0, 0, 0, 0.4);
     font-family: 'Open Sans', sans-serif;
@@ -50,7 +50,7 @@
 
   #menu a {
     font-size: 13px;
-    color: #771B0D;
+    color: rgb(0, 0, 0);
     display: block;
     margin: 0;
     padding: 0;
@@ -65,17 +65,17 @@
   }
 
   #menu a:hover {
-    background-color: #ECE7CA;
+    background-color: rgb(196, 193, 186);
     color: #404040;
   }
 
   #menu a.active {
-    background-color: #A73D2A;
+    background-color: rgb(79, 113, 141);
     color: #ffffff;
   }
 
   #menu a.active:hover {
-    background: #8A3223;
+    background: rgb(56, 80, 100);
   }
 
   h3 {
@@ -195,7 +195,7 @@
         },
         'paint': {
           'circle-radius': 5,
-          'circle-color': '#598846'
+          'circle-color': '#437024'
         },
         'source-layer': 'natura-2lyqzu'
       });
@@ -213,7 +213,7 @@
         },
         'paint': {
           'circle-radius': 5,
-          'circle-color': '#DCC844'
+          'circle-color': '#cf9d22'
         },
         'source-layer': 'patrimoni-73v511'
       });
@@ -231,7 +231,7 @@
         },
         'paint': {
           'circle-radius': 5,
-          'circle-color': '#EA5A5A'
+          'circle-color': '#941418'
         },
         'source-layer': 'infoamb'
       });
@@ -269,15 +269,15 @@
     }
 
    
-
+   // Afegim el geocoder i el control de navegació
     map.addControl(new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      countries: "es",
-      placeholder: "Cerca...",
+      countries: "es", // Regió de cerca
+      placeholder: "Cerca...", //Text que es mostra al checkbox del cercador
       mapboxgl: mapboxgl
     }), 'top-right');
     map.addControl(new mapboxgl.AttributionControl({ compact: true }));
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl()); // controls de navegació
 
 
     // Afegim el geolocalitzador (pensat per a dispositius mòbils)
@@ -333,7 +333,7 @@
     // afegim pop-ups que ens mostrin nom del lloc, la categoria, l'enllaç a la web amb més informació i una imatge
     map.on('click', function (e) {
       var features = map.queryRenderedFeatures(e.point, {
-        layers: ['Natura', 'Patrimoni', 'Informació']
+        layers: ['Natura', 'Patrimoni', 'Informació'] //capes afectades
       });
       if (!features.length) {
         return;
